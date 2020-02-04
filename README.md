@@ -8,9 +8,9 @@ $ cd csci-497-project-classroomfeedbacksystem
 
 # Create a virtualenv and activate it:
 
-$ python3 -m venv venv
-$ . venv/bin/activate
-Or on Windows cmd:
+$ python3 -m venv venv \
+$ . venv/bin/activate \
+Or on Windows cmd: \
 
 $ py -3 -m venv venv
 $ venv\Scripts\activate.bat
