@@ -8,14 +8,14 @@ $ cd csci-497-project-classroomfeedbacksystem
 
 # Create a virtualenv and activate it:
 
-$ python3 -m venv venv \
-$ . venv/bin/activate \
-Or on Windows cmd: \
+$ python3 -m venv venv 
+$ . venv/bin/activate 
 
+Or on Windows cmd: 
 $ py -3 -m venv venv
 $ venv\Scripts\activate.bat
-Install Flaskr:
 
+Install Flaskr:
 $ pip install -e .
 Or if you are using the master branch, install Flask from source before installing Flaskr:
 
@@ -27,8 +27,8 @@ $ export FLASK_APP=flaskr
 $ export FLASK_ENV=development
 $ flask init-db
 $ flask run
-Or on Windows cmd:
 
+Or on Windows cmd:
 $ set FLASK_APP=flaskr
 $ set FLASK_ENV=development
 $ flask init-db
