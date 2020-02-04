@@ -39,26 +39,4 @@ Open http://127.0.0.1:5000 in a browser.
 $ pip install pytest coverage
 $ pytest
 
-# Structure
-mean-review-collector
----app
-  ---templates
-        --base.html
-      auth
-        --login.html
-        --register.html
-      review
-        --home.html
-       --about.html
-       --error.html
-  ---__init__.py
-  ---errors.py
-  ---auth.py
-  ---review.py
-  ---db.py
-  ---schema.sql
----tests
----instance
-  ---app.sqlite
----env
 
