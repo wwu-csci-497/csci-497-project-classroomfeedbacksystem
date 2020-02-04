@@ -1,13 +1,10 @@
 # csci-497-project-classroomfeedbacksystem
 
-Flaskr
-The basic blog app built in the Flask tutorial.
-
-
+NIMBLEKNOW: A classoom feedback system 
 
 # clone the repository
-$ git clone https://github.com/pallets/flask
-$ cd flask
+$ git clone git@github.com:wwu-csci-497/csci-497-project-classroomfeedbacksystem.git
+$ cd csci-497-project-classroomfeedbacksystem
 
 Create a virtualenv and activate it:
 
