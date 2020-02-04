@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Register an account{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form method="post">
+  <div>
+    <label>Email address</label>
+    <input type="email" class="form control" id="email" aria-describedby="emailHelp" placeholder="Enter email" name="username">
+  </div>
+  <div>
+    <label>Password</label>
+    <input type="password" class="form control" id="user-password" placeholder="Password" name="password">
+  </div>
+  <button type="submit">Submit</button>
+</form>
+{% endblock %}
