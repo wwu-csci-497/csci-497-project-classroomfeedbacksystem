@@ -10,9 +10,50 @@ bp = Blueprint('auth', __name__)
 @bp.route('/teacherlogin')
 def teacherlogin():
     return render_template('auth/teacherlogin.html')
-@bp.route('/studentlogin')
+@bp.route('/studentlogin', methods=('GET', 'POST'))
 def studentlogin():
+    if request.method == 'GET':
+        classname = request.form.get('classname')
+        password = request.form.get('password')
+        db = get_db()
+        error = None
+        classroom = db.execute(
+            'SELECT * FROM classroom WHERE classname = ?', (classname,)
+        ).fetchone()
+        print(classroom)
+        if classroom is None:
+            error = 'Incorrect classname.'
+        elif not check_password_hash(user['password'], password):
+            error = 'Incorrect password.'
+        if error is None:
+            session.clear()
+            session['class_id'] = classroom['id']
+            return redirect(url_for('review.question'))
+        flash(error)
     return render_template('auth/studentlogin.html')
+@bp.route('/registerclass', methods=('GET', 'POST'))
+def registerclass():
+    if request.method == 'POST':
+        classname = request.form['classname']
+        password = request.form['password']
+        db = get_db()
+        error = None
+        if not classname:
+            error = 'Class Name is required.'
+        elif not password:
+            error = 'Password is required.'
+        elif db.execute(
+            'SELECT id FROM classroom WHERE classname = ?', (classname,)).fetchone() is not None:
+            error = 'Class {} is already registered.'.format(classname)
+        if error is None:
+            db.execute(
+            'INSERT INTO classroom (classname, password) VALUES (?, ?)',
+            (classname, generate_password_hash(password))
+            )
+            db.commit()
+            return redirect(url_for('review.question'))
+        flash(error)
+    return render_template('auth/registerclass.html')
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
   # many cases

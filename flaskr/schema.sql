@@ -4,3 +4,10 @@ CREATE TABLE user (
   username TEXT UNIQUE NOT NULL,
   password TEXT NOT NULL
 );
+
+DROP TABLE IF EXISTS classroom;
+CREATE TABLE classroom (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  classname TEXT UNIQUE NOT NULL,
+  password TEXT NOT NULL
+);
