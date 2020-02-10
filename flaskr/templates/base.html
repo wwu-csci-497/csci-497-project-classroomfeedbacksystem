@@ -27,18 +27,28 @@
           </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Login
+            {% if session.get('user_id') is none %}
+              Login
+            {% else %}
+              My Account
+              {% endif %}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="{{ url_for('auth.studentlogin') }}">Student Login</a>
-            <a class="dropdown-item" href="{{ url_for('auth.teacherlogin') }}">Teacher Login</a>
-            <a class="dropdown-item" href="{{ url_for('auth.register') }}">Register</a>
+            {% if session.get('user_id') is none %}
+              <a class="dropdown-item" href="{{ url_for('auth.studentlogin') }}">Student Login</a>
+              <a class="dropdown-item" href="{{ url_for('auth.teacherlogin') }}">Teacher Login</a>
+              <a class="dropdown-item" href="{{ url_for('auth.register') }}">Teacher Register</a>
+            {% else %}
+            <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a>
             <a class="dropdown-item" href="{{ url_for('auth.registerclass') }}">Register Classroom</a>
+            {% endif %}
           </div>
         </li>
       </ul>
     </div>
   </nav>
+
+  
 
 
 <section class="content">

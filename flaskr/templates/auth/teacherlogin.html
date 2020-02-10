@@ -5,15 +5,17 @@
 {% endblock %}
 
 {% block content %}
-<form>
+<form method="post">
   <div>
-    <label>Email address</label>
-    <input type="email" id="inputEmail1" placeholder="Enter email">
+    <label for="username">Email address</label>
+    <input name="username" type="email" id="username" placeholder="Enter email">
   </div>
   <div>
-    <label>Password</label>
-    <input type="password" id="inputPassword1" placeholder="Password">
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" placeholder="Password" required>
   </div>
-  <button type="submit">Submit</button>
+  <button type="submit" value="Log In">Submit</button>
 </form>
 {% endblock %}
+
+

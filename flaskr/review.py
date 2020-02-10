@@ -1,6 +1,7 @@
 #review.py
 from flask import Flask, render_template, make_response, Blueprint, g
 
+from flaskr.auth import login_required
 
 # import more
 bp = Blueprint('review', __name__)
@@ -14,6 +15,11 @@ def question():
 @bp.route('/about')
 def about():
     return render_template('review/about.html')
+
+@bp.route('/dashboard')
+@login_required
+def dashboard():
+    return render_template('review/dashboard.html')
 
 
 @bp.route('/<page_name>')

@@ -10,11 +10,56 @@ from flaskr.db import get_db
 
 
 bp = Blueprint('auth', __name__)
-@bp.route('/teacherlogin')
+
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for('auth.teacherlogin'))
+        return view(**kwargs)
+    return wrapped_view
+
+@bp.before_app_request
+def load_logged_in_user():
+    """If a user id is stored in the session, load the user object from
+    the database into ``g.user``."""
+    user_id = session.get("user_id")
+
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = (
+            get_db().execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
+        )
+
+@bp.route('/teacherlogin', methods=('GET', 'POST'))
 def teacherlogin():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        db = get_db()
+        error = None
+        user = db.execute(
+            'SELECT * FROM user WHERE username = ?', (username,)
+        ).fetchone()
+
+        if user is None:
+            error = 'Incorrect username.'
+        elif not check_password_hash(user['password'], password):
+            error = 'Incorrect password.'
+        if error is None:
+            session.clear()
+            session['user_id'] = user['id']
+            print(user)
+            return redirect(url_for('review.dashboard'))
+
+        flash(error)
     return render_template('auth/teacherlogin.html')
 
-
+@bp.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('review.home'))
 
 @bp.route('/studentlogin', methods=('GET', 'POST'))
 def studentlogin():
