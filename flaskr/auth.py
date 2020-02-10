@@ -1,38 +1,45 @@
 #auth.py
-from flask import Flask, render_template, make_response, Blueprint, redirect, url_for, flash, request, session
+import functools
+
+from flask import Flask, render_template, make_response, Blueprint, redirect, url_for, flash, request, session, g
 from werkzeug.security import check_password_hash, generate_password_hash
 
 
 from flaskr.db import get_db
 
-# import more
+
+
 bp = Blueprint('auth', __name__)
 @bp.route('/teacherlogin')
 def teacherlogin():
     return render_template('auth/teacherlogin.html')
+
+
+
 @bp.route('/studentlogin', methods=('GET', 'POST'))
 def studentlogin():
-    if request.method == 'GET':
-        classname = request.form.get('classname')
-        password = request.form.get('password')
+    if request.method == 'POST':
+        classname = request.form.get("classname")
+        password = request.form.get("password")
         db = get_db()
         error = None
         classroom = db.execute(
-            'SELECT * FROM classroom WHERE classname = ?', (classname,)
+         "SELECT * FROM classroom WHERE classname = ?", (classname,)
         ).fetchone()
 
         if classroom is None:
             error = 'Incorrect classname.'
-        elif not check_password_hash(user['password'], password):
+        elif not check_password_hash(classroom["password"], password):
             error = 'Incorrect password.'
 
         if error is None:
             session.clear()
-            session['class_id'] = classroom['id']
+            session['classroom_id'] = classroom['id']
             return redirect(url_for('review.question'))
 
         flash(error)
     return render_template('auth/studentlogin.html')
+
 @bp.route('/registerclass', methods=('GET', 'POST'))
 def registerclass():
     if request.method == 'POST':

@@ -5,15 +5,19 @@
 {% endblock %}
 
 {% block content %}
-<form>
+
+<form method="post">
   <div>
-    <label>Class Name</label>
-    <input type="text" class="form control" id="name" placeholder="Enter class name" name="classname">
+    <label for="classname">Class Name</label>
+    <input name="classname" id="classname" required>
   </div>
   <div>
-    <label>Passcode</label>
-    <input type="password" class="form control" id="inputPassword1" placeholder="Password" name="password">
+    <label for="password">Passcode</label>
+    <input type="password" name="password" id="password" required>
+    <input type="submit" value="Log In">
+
   </div>
-  <button type="submit">Submit</button>
+  
 </form>
+
 {% endblock %}

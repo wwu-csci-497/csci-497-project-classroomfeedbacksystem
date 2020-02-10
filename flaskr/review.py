@@ -1,5 +1,6 @@
 #review.py
-from flask import Flask, render_template, make_response, Blueprint
+from flask import Flask, render_template, make_response, Blueprint, g
+
 
 # import more
 bp = Blueprint('review', __name__)
@@ -13,6 +14,7 @@ def question():
 @bp.route('/about')
 def about():
     return render_template('review/about.html')
+
 
 @bp.route('/<page_name>')
 def other_page(page_name):
