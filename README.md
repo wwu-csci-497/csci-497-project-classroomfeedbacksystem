@@ -13,10 +13,10 @@ $ . venv/bin/activate
 
 Or on Windows cmd: 
 $ py -3 -m venv venv
-$ venv\Scripts\activate.bat
+$ venv\Scripts\activate
 
 Install Flaskr:
-$ pip install -e .
+$ pip install e
 Or if you are using the master branch, install Flask from source before installing Flaskr:
 
 $ pip install -e ../..
