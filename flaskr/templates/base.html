@@ -17,10 +17,14 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item active">
+          {% if session.get('user_id') is none %}
           <a class="nav-link" href="{{ url_for('review.home') }}">Home <span class="sr-only">(current)</span></a>
+          {% else %}
+          <a class="nav-link" href="{{ url_for('review.dashboard') }}">Home <span class="sr-only">(current)</span></a>
+          {% endif %}
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('review.question') }}">Make Question</a>
+          <a class="nav-link" href="{{ url_for('review.create') }}">Make Question</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ url_for('review.about') }}">About</a>
@@ -49,7 +53,6 @@
   </nav>
 
   
-
 
 <section class="content">
   <header>

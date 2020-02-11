@@ -1,11 +1,33 @@
 {% extends 'base.html' %}
+
 {% block header %}
 <div class="container">
   <h1>{% block title %}Welcome, Teacher!{% endblock %}</h1>
 </div>
 {% endblock %}
+
+
 {% block content %}
+
+<p class="lead">Here are your classrooms:</p>
+{% for classroom in classrooms %}
+  <blockquote class="blockquote">
+    <a class="btn btn-primary" href="{{ url_for('review.classroom', classname=classroom['classname']) }}" role="button">{{classroom['classname'] }}</a>
+  </blockquote>
+  
+{% endfor %}
+
 <div class="container">
-  <p class="lead">Want to <a href="#">write a question</a>?</p>
-</div>
+    <p class="lead">Want to <a href="{{ url_for('auth.registerclass') }}">register a class</a>?</p>
+  </div>
 {% endblock %}
+
+<!-- <footer class="blockquote-footer">
+      From @{{ question['username'].split("@")[0] }}
+      <a href="
+             {{ url_for('.edit', id=question['id']) }}">Edit</a>
+      <a href="
+         {{ url_for('question.delete', id=question['id']) }}">Delete</a>
+    </footer> -->
+
+ 

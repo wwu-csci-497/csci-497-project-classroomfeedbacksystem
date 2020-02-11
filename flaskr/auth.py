@@ -19,6 +19,15 @@ def login_required(view):
         return view(**kwargs)
     return wrapped_view
 
+def class_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        classroom_id = session.get("classroom_id")
+        if classroom_id is None:
+            return redirect(url_for('auth.studentlogin'))
+        return view(**kwargs)
+    return wrapped_view
+
 @bp.before_app_request
 def load_logged_in_user():
     """If a user id is stored in the session, load the user object from
@@ -31,6 +40,7 @@ def load_logged_in_user():
         g.user = (
             get_db().execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
         )
+
 
 @bp.route('/teacherlogin', methods=('GET', 'POST'))
 def teacherlogin():
@@ -80,12 +90,14 @@ def studentlogin():
         if error is None:
             session.clear()
             session['classroom_id'] = classroom['id']
-            return redirect(url_for('review.question'))
+            print(classname)
+            return redirect(url_for('review.studentclassroom', classname = classname))
 
         flash(error)
     return render_template('auth/studentlogin.html')
 
 @bp.route('/registerclass', methods=('GET', 'POST'))
+@login_required
 def registerclass():
     if request.method == 'POST':
         classname = request.form['classname']
@@ -101,13 +113,14 @@ def registerclass():
             error = 'Class {} is already registered.'.format(classname)
         if error is None:
             db.execute(
-            'INSERT INTO classroom (classname, password) VALUES (?, ?)',
-            (classname, generate_password_hash(password))
+            'INSERT INTO classroom (classname, teacher, password) VALUES (?, ?, ?)',
+            (classname, g.user['id'], generate_password_hash(password))
             )
             db.commit()
-            return redirect(url_for('review.question'))
+            return redirect(url_for('review.dashboard'))
         flash(error)
     return render_template('auth/registerclass.html')
+
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
   # many cases

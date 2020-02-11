@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="container">
+  <h1>{% block title %}Your Classrooms{% endblock %}</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+<p class="lead">Questions:</p>
+{% for question in questions %}
+  <blockquote class="blockquote">
+    <p class="mb-0" > {{ question['content'] }}</p>
+    <a class="btn btn-primary" href="{{ url_for('review.responses', question_id=question['id'], classname=question['classname']) }}" role="button">Responses</a>
+  </blockquote>
+{% endfor %}
+ 
+
+
+<div class="container">
+  <p class="lead">Want to <a href="{{ url_for('review.create') }}">write a question</a>?</p>
+</div>
+{% endblock %}

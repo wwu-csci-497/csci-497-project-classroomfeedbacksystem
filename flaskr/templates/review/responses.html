@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="container">
+  <h1>{% block title %}
+        <blockquote class="blockquote">
+            <p class="mb-0" > {{ question['content'] }}</p>
+        </blockquote>{% endblock %}
+    </h1>
+</div>
+{% endblock %}
+
+{% block content %}
+    <blockquote class="blockquote">
+      <p class="lead" > Responses</p>
+     </blockquote>
+{% for response in responses %}
+  <blockquote class="blockquote">
+    <p class="mb-0" > {{ response['content'] }}</p>
+  </blockquote>
+{% endfor %}
+{% endblock %}
+
+ 
