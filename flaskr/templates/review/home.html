@@ -1,14 +1,12 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Knimble Know{% endblock %}</h1>
+  <h1>{% block title %}The New Standard in Instant Online Feedback{% endblock %}</h1>
 {% endblock %}
-
-{% for question in questions %}
+{% block content %}
+    <p>Welcome! To get started, please select an option from the task bar.</p>
   <blockquote class="blockquote">
-    <p class="mb-0">{{ question['content'] }}</p>
-      <footer class="blockquote-footer">
-        From @{{ question['username'].split("@")[0] }}
-      </footer>
-  </blockquote>
-{% endfor %}
+    <p class="mb-0">"This app is awesome! The prototype blows my mind."</p>
+    <footer class="blockquote-footer">From a user, probably</footer>
+</blockquote>
+
