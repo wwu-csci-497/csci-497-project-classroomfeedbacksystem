@@ -142,27 +142,7 @@ def other_page(page_name):
     response = make_response(render_template('review/404.html'), 404)
     return response
 
-@bp.route('/create', methods=('GET', 'POST'))
-#@login_required
-def create():
-    if request.method == 'POST':
-        text = request.form['review-text']
-        text = text.strip()
-        db = get_db()
-        error = None
-    if not text:
-        error = 'You didn\'t add any new reviews.'
-    if error is None:
-        db.execute(
-            'INSERT INTO question (author_id, content) VALUES (?, ?)',
-            (g.user['id'], text)
-        )
-    db.commit()
-    return redirect(url_for('review.dashboard'))
 
-    flash(error)
-
-    return render_template('review/question.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
