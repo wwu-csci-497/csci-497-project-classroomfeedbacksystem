@@ -60,7 +60,6 @@ def teacherlogin():
         if error is None:
             session.clear()
             session['user_id'] = user['id']
-            print(user)
             return redirect(url_for('review.dashboard'))
 
         flash(error)
@@ -90,7 +89,6 @@ def studentlogin():
         if error is None:
             session.clear()
             session['classroom_id'] = classroom['id']
-            print(classname)
             return redirect(url_for('review.studentclassroom', classname = classname))
 
         flash(error)
