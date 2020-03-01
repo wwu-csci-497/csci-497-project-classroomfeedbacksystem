@@ -6,15 +6,28 @@
     <div class="form-group">
 
     <label for="exampleFormControlTextarea1">Your Question:</label>
-      <div class="custom-control custom-radio">
-        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-        <label class="custom-control-label" for="customRadio1">A</label>
-      </div>
-      <div class="custom-control custom-radio">
-        <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-        <label class="custom-control-label" for="customRadio2">B</label>
-      </div>
-    </div>
+
+    <textarea class="form-control" rows="3" name="question-text">   
+    </textarea>
+
+    
+    <p class="lead">Add options:</p>
+
+    <form class="form-inline">
+        <label class="sr-only" for="inlineFormInputName2">Label</label>
+        <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="A" name="option-label">
+      
+        <label class="sr-only" for="inlineFormInputGroupUsername2">Option</label>
+        <div class="input-group mb-2 mr-sm-2">
+          <div class="input-group-prepend">
+          <input type="text" class="form-control" id="inlineFormInputGroupUsername2" placeholder="The color blue" name="option-content">
+        </div>
+      
+      
+        <button type="submit" class="btn btn-primary mb-2">Add</button>
+      </form>
+
+
 
     <label for="exampleFormControlTextarea2">Class:</label>
       <textarea class="form-control" rows="1" name="class">   

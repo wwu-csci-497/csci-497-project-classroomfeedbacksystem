@@ -91,7 +91,6 @@ def responses(question_id, classname):
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
-    print("hello")
     if request.method == 'POST':
         q_type = request.form['question_type']
         print(q_type)
@@ -120,8 +119,8 @@ def createlongresponse():
             error = 'You didn\'t add any new question.'
         if error is None:
             db.execute(
-            'INSERT INTO question (author_id, content, classname) VALUES (?, ?, ?)',   
-            (g.user['id'], text, classname)
+            'INSERT INTO question (author_id, q_type, content, classname) VALUES (?, ?, ?, ?)',   
+            (g.user['id'], 'long response',text, classname)
             )
             db.commit()
             print(classname)
@@ -132,6 +131,40 @@ def createlongresponse():
 @bp.route('/CreateMultipleChoice', methods=('GET', 'POST'))
 @login_required
 def CreateMultipleChoice():
+    if request.method == 'POST':
+        text = request.form['question-text']
+        text = text.strip()
+        classname = request.form['class']
+        classname = classname.strip()
+        option_label = request.form['option-label']
+        option_label = option_label.strip()
+        option_content = request.form['option-content']
+        option_content = option_label.strip()
+        db = get_db()
+        error = None
+        if not text:
+            error = 'You didn\'t add any new question.'
+        if error is None:
+            db.execute(
+            'INSERT INTO question (author_id, q_type, content, classname) VALUES (?, ?, ?, ?)',   
+            (g.user['id'], 'multiple-choice', text, classname)
+            )
+            db.commit()
+        if not option_label:
+            error = 'You didn\'t add any options.'
+        if error is None:
+            q_id = db.execute(
+                'SELECT id FROM question WHERE content = ?',   
+                (text)
+            )
+            print(q_id)
+            db.execute(
+            'INSERT INTO options (question_id, content, label) VALUES (?, ?, ?)',   
+            (q_id, option_content, option_label)
+            )
+            db.commit()
+            return redirect(url_for('review.classroom', classname = classname))
+        flash(error)
     return render_template('review/CreateMultipleChoice.html')
 
 @bp.route('/<question_id>/<classname>/response', methods=('GET', 'POST'))
