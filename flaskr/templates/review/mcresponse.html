@@ -1,0 +1,27 @@
+{% extends 'review/create.html' %}
+
+{% block content %}
+<div class="container">
+  <form method="post">
+    <div class="form-group">
+
+    <label for="exampleFormControlTextarea1">Your Question:</label>
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio1">A</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio2">B</label>
+      </div>
+    </div>
+
+    <label for="exampleFormControlTextarea2">Class:</label>
+      <textarea class="form-control" rows="1" name="class">   
+      </textarea>
+
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
+</div>
+{% endblock %}

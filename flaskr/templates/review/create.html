@@ -8,12 +8,15 @@
 <div class="container">
   <form method="post">
     <div class="form-group">
-      <label for="exampleFormControlTextarea1">Your Question:</label>
-      <textarea class="form-control" rows="3" name="question-text">   
-      </textarea>
-      <label for="exampleFormControlTextarea2">Class:</label>
-      <textarea class="form-control" rows="1" name="class">   
-      </textarea>
+      
+      <label for="exampleFormControlTextarea1">Type</label>
+      <select class="form-control" name = "question_type">
+        <option value = "long_response" > Long Response</option>
+        <option value = "multiple_choice"> Multiple Choice</option>
+      </select>
+   
+       
+
     </div>
     <button class="btn btn-primary" type="submit">Submit</button>
   </form>

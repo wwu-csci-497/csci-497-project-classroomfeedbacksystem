@@ -10,7 +10,7 @@
 <p class="lead">Questions:</p>
 {% for question in questions %}
   <blockquote class="blockquote">
-    <a class="btn btn-primary" href="{{ url_for('review.response', question_id=question['id'], classname=question['classname']) }}" role="button">{{question['content'] }}</a>
+    <a class="btn btn-primary" href="{{ url_for('review.response', question_id=question['id'], classname=question['classname']) }}" role="button">{{question['content']}}</a>
   </blockquote>
 {% endfor %}
  

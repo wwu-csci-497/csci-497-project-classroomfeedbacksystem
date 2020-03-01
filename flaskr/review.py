@@ -91,6 +91,24 @@ def responses(question_id, classname):
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
+    print("hello")
+    if request.method == 'POST':
+        q_type = request.form['question_type']
+        print(q_type)
+        error = None
+        if q_type == 'long_response':
+            return redirect(url_for('review.createlongresponse'))
+        elif q_type == 'multiple_choice':
+            return redirect(url_for('review.CreateMultipleChoice'))
+        else:
+            error = 'You didn\'t add any new question.'
+        flash(error)
+
+    return render_template('review/create.html')
+
+@bp.route('/createlongresponse', methods=('GET', 'POST'))
+@login_required
+def createlongresponse():
     if request.method == 'POST':
         text = request.form['question-text']
         text = text.strip()
@@ -109,7 +127,12 @@ def create():
             print(classname)
             return redirect(url_for('review.classroom', classname = classname))
         flash(error)
-    return render_template('review/create.html')
+    return render_template('review/createlongresponse.html')
+
+@bp.route('/CreateMultipleChoice', methods=('GET', 'POST'))
+@login_required
+def CreateMultipleChoice():
+    return render_template('review/CreateMultipleChoice.html')
 
 @bp.route('/<question_id>/<classname>/response', methods=('GET', 'POST'))
 @class_required
