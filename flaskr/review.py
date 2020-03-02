@@ -88,20 +88,9 @@ def responses(question_id, classname):
     return render_template('review/responses.html', responses = responses, question = question)
 
 
-@bp.route('/create', methods=('GET', 'POST'))
+@bp.route('/create')
 @login_required
 def create():
-    if request.method == 'POST':
-        q_type = request.form['question_type']
-        print(q_type)
-        error = None
-        if q_type == 'long_response':
-            return redirect(url_for('review.createlongresponse'))
-        elif q_type == 'multiple_choice':
-            return redirect(url_for('review.CreateMultipleChoice'))
-        else:
-            error = 'You didn\'t add any new question.'
-        flash(error)
 
     return render_template('review/create.html')
 
@@ -132,14 +121,11 @@ def createlongresponse():
 @login_required
 def CreateMultipleChoice():
     if request.method == 'POST':
-        text = request.form['question-text']
+        form = request.form
+        text = form['question-text']
         text = text.strip()
         classname = request.form['class']
         classname = classname.strip()
-        option_label = request.form['option-label']
-        option_label = option_label.strip()
-        option_content = request.form['option-content']
-        option_content = option_label.strip()
         db = get_db()
         error = None
         if not text:
@@ -150,22 +136,35 @@ def CreateMultipleChoice():
             (g.user['id'], 'multiple-choice', text, classname)
             )
             db.commit()
-        if not option_label:
-            error = 'You didn\'t add any options.'
-        if error is None:
             q_id = db.execute(
-                'SELECT id FROM question WHERE content = ?',   
+                'SELECT id FROM question WHERE content = ?',
                 (text)
             )
-            print(q_id)
+            A = "A"
+            addOptions( A, q_id)
+            addOptions( 'B', q_id)
+            addOptions( 'C', q_id)
+            addOptions( 'D', q_id)
+            addOptions( 'E', q_id)
+        
+
+       
+           # return redirect(url_for('review.classroom', classname = classname))
+        
+    return render_template('review/CreateMultipleChoice.html')
+
+def addOptions(letter, q_id):
+    if request.method == 'POST':
+        content = request.form[letter]
+        content = content.strip()
+        db = get_db()
+        if content:
             db.execute(
-            'INSERT INTO options (question_id, content, label) VALUES (?, ?, ?)',   
-            (q_id, option_content, option_label)
+            'INSERT INTO options (question_id, label, content) VALUES (?, ?, ?)',   
+            (q_id, letter, content)
             )
             db.commit()
-            return redirect(url_for('review.classroom', classname = classname))
-        flash(error)
-    return render_template('review/CreateMultipleChoice.html')
+
 
 @bp.route('/<question_id>/<classname>/response', methods=('GET', 'POST'))
 @class_required
@@ -182,10 +181,12 @@ def response(question_id, classname):
         if not text:
             error = 'You didn\'t add any new response.'
         if error is None:
+            print(text)
             db.execute(
             'INSERT INTO response (content, question_id) VALUES (?, ?)',   
             (text, question_id)
             )
+            print(text)
             db.commit()
             return redirect(url_for('review.studentclassroom', classname = classname,))
         flash(error)

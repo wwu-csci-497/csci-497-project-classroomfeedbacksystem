@@ -5,20 +5,13 @@
 </div>
 {% endblock %}
 {% block content %}
-<div class="container">
-  <form method="post">
-    <div class="form-group">
-      
-      <label for="exampleFormControlTextarea1">Type</label>
-      <select class="form-control" name = "question_type">
-        <option value = "long_response" > Long Response</option>
-        <option value = "multiple_choice"> Multiple Choice</option>
-      </select>
-   
-       
-
-    </div>
-    <button class="btn btn-primary" type="submit">Submit</button>
-  </form>
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Question Type
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="{{ url_for('review.createlongresponse') }}" > Long Response</a>
+    <a class="dropdown-item" href="{{ url_for('review.CreateMultipleChoice') }}" > Multiple Choice</a>
+  </div>
 </div>
 {% endblock %}
