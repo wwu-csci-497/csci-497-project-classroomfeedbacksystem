@@ -134,22 +134,26 @@ def CreateMultipleChoice():
             db.execute(
             'INSERT INTO question (author_id, q_type, content, classname) VALUES (?, ?, ?, ?)',   
             (g.user['id'], 'multiple-choice', text, classname)
+
             )
             db.commit()
-            q_id = db.execute(
-                'SELECT id FROM question WHERE content = ?',
-                (text)
-            )
+            q_id  = db.execute(
+                'SELECT MAX(id) FROM question',  
+               
+                )
+            Q_id = -1
+            for q in q_id:
+                Q_id=q[0]
+           
             A = "A"
-            addOptions( A, q_id)
-            addOptions( 'B', q_id)
-            addOptions( 'C', q_id)
-            addOptions( 'D', q_id)
-            addOptions( 'E', q_id)
+            addOptions( A, Q_id)
+            addOptions( 'B', Q_id)
+            addOptions( 'C', Q_id)
+            addOptions( 'D', Q_id)
+            addOptions( 'E', Q_id)
+            return redirect(url_for('review.classroom', classname = classname))
+    #if request.method == 'GET':
         
-
-       
-           # return redirect(url_for('review.classroom', classname = classname))
         
     return render_template('review/CreateMultipleChoice.html')
 
