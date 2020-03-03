@@ -145,8 +145,7 @@ def CreateMultipleChoice():
             for q in q_id:
                 Q_id=q[0]
            
-            A = "A"
-            addOptions( A, Q_id)
+            addOptions( 'A', Q_id)
             addOptions( 'B', Q_id)
             addOptions( 'C', Q_id)
             addOptions( 'D', Q_id)
@@ -174,10 +173,22 @@ def addOptions(letter, q_id):
 @class_required
 def response(question_id, classname):
     db = get_db()
-    question = db.execute(
-        'SELECT content FROM question WHERE id = ?',   
-        (question_id)
+    questions = db.execute(
+        'SELECT content, q_type FROM question WHERE id = ?',   
+        (question_id,)
         )
+    q_type = ""
+    content = ""
+    for q in questions:
+        content = q[0]
+        q_type = q[1]
+    if q_type == "multiple-choice":
+        options= db.execute(
+        'SELECT label, content FROM options WHERE question_id = ?',   
+        (question_id,)
+        )
+        return render_template('review/mcresponse.html', question = content, option = options)
+
     if request.method == 'POST':
         text = request.form['response-text']
         text = text.strip()
@@ -195,7 +206,40 @@ def response(question_id, classname):
             return redirect(url_for('review.studentclassroom', classname = classname,))
         flash(error)
     
-    return render_template('review/response.html', question = question )
+    return render_template('review/response.html', question = content )
+
+@bp.route('/<question_id>/<options>/<classname>/mcresponse', methods=('GET', 'POST'))
+@class_required
+def mcresponse(question_id, options, classname):
+    db = get_db()
+    question = db.execute(
+        'SELECT content FROM question WHERE id = ?',   
+        (question_id)
+        )
+    options = db.execute(
+        'SELECT * FROM options WHERE question_id = ?',   
+        (question_id)
+        ) 
+    for option in options:
+        print(option[1])
+    if request.method == 'POST':
+        text = request.form['response-text']
+        text = text.strip()
+        error = None
+        if not text:
+            error = 'You didn\'t add any new response.'
+        if error is None:
+            print(text)
+            db.execute(
+            'INSERT INTO response (content, question_id) VALUES (?, ?)',   
+            (text, question_id)
+            )
+            print(text)
+            db.commit()
+            return redirect(url_for('review.studentclassroom', classname = classname,))
+        flash(error)
+    
+    return render_template('review/mcresponse.html', question = question , options = options)
 
 
 @bp.route('/<page_name>')
