@@ -183,11 +183,12 @@ def response(question_id, classname):
         content = q[0]
         q_type = q[1]
     if q_type == "multiple-choice":
+        print("mc if")
         options= db.execute(
         'SELECT label, content FROM options WHERE question_id = ?',   
         (question_id,)
-        )
-        return render_template('review/mcresponse.html', question = content, option = options)
+        ).fetchall()
+        return redirect(url_for('review.mcresponse', question = content, id=question_id, options = options, classname = classname))
 
     if request.method == 'POST':
         text = request.form['response-text']
@@ -203,43 +204,34 @@ def response(question_id, classname):
             )
             print(text)
             db.commit()
-            return redirect(url_for('review.studentclassroom', classname = classname,))
+            return redirect(url_for('review.studentclassroom', classname = classname))
         flash(error)
     
     return render_template('review/response.html', question = content )
 
-@bp.route('/<question_id>/<options>/<classname>/mcresponse', methods=('GET', 'POST'))
+@bp.route('/<question>/<id>/<options>/<classname>/mcresponse', methods=('GET', 'POST'))
 @class_required
-def mcresponse(question_id, options, classname):
+def mcresponse(question, id, options, classname):
     db = get_db()
-    question = db.execute(
-        'SELECT content FROM question WHERE id = ?',   
-        (question_id)
-        )
-    options = db.execute(
-        'SELECT * FROM options WHERE question_id = ?',   
-        (question_id)
-        ) 
-    for option in options:
-        print(option[1])
+    print(question)
+    print(id)
+
+        
     if request.method == 'POST':
-        text = request.form['response-text']
-        text = text.strip()
+        choice = request.form['customRadio']
         error = None
-        if not text:
+        if not choice:
             error = 'You didn\'t add any new response.'
         if error is None:
-            print(text)
             db.execute(
-            'INSERT INTO response (content, question_id) VALUES (?, ?)',   
-            (text, question_id)
+            'INSERT INTO response (choice, question_id) VALUES (?, ?)',   
+            (choice, id)
             )
-            print(text)
             db.commit()
-            return redirect(url_for('review.studentclassroom', classname = classname,))
+            return redirect(url_for('review.studentclassroom', classname = classname))
         flash(error)
     
-    return render_template('review/mcresponse.html', question = question , options = options)
+    return render_template('review/mcresponse.html', question = question , id=id, options = options)
 
 
 @bp.route('/<page_name>')

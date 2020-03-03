@@ -40,7 +40,8 @@ DROP TABLE IF EXISTS response;
 CREATE TABLE response (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  content TEXT NOT NULL,
+  content TEXT,
+  choice TEXT,
   question_id INTEGER NOT NULL,
   FOREIGN KEY (question_id) REFERENCES question (id)
 );
