@@ -29,6 +29,9 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ url_for('review.about') }}">About</a>
           </li>
+      <li class="nav-item">
+            <a class="nav-link" href="#" id="google_translate_element"></a>
+          </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {% if session.get('user_id') is none %}
@@ -52,13 +55,24 @@
     </div>
   </nav>
 
-  
+  <div id="google_translate_element"></div>
+
+    <script type="text/javascript" src=
+"https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+    </script>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en'},
+                'google_translate_element');
+        }
+    </script>
 
 <section class="content">
   <header>
     {% block header %}{% endblock %}
   </header>
-  {% block content %}{% endblock %}
+  {% block content %}
+  {% endblock %}
 </section>
 
 {% for message in get_flashed_messages() %}
