@@ -1,5 +1,7 @@
 from flask import Flask, request
-import requests
+
+# would not run, error said that module 'requests' did not exist
+#import requests
 
 app = Flask(__name__)
 
