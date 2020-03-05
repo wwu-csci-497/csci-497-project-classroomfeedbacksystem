@@ -9,5 +9,10 @@
     <p class="mb-0">"This app is awesome! The prototype blows my mind."</p>
     <footer class="blockquote-footer">From a user, probably</footer>
 </blockquote>
+<div role = "group" style="text-align:center">
+  <a  class="btn btn-outline-info btn-lg" href="{{ url_for('auth.teacherlogin') }}" role="button">Teacher Login</a>
+  <a  class="btn btn-outline-info btn-lg" href="{{ url_for('auth.register') }}" role="button">Teacher Register</a>
+  <a  class="btn btn-outline-info btn-lg" href="{{ url_for('auth.studentlogin') }}" role="button">Student Login</a>
+</div>
 {% endblock %}
 
