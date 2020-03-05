@@ -41,34 +41,80 @@ def init_db():
 
 def sample_data():
     db = get_db()
+
+    """Generate Teacher"""
     db.execute(
-    'INSERT INTO question (author_id, q_type, classname, content) VALUES (?, ?, ?, ?)',
-    (1, "multichoice", "classroom", "What is your favorite letter?")
+    'INSERT INTO user (username, password) VALUES (?, ?)',
+    ("test@nimbleknow.com", "password")
     )
     db.commit()
+
+    """Generate Classroom"""
+    db.execute(
+    'INSERT INTO classroom (classname, teacher, password) VALUES (?, ?, ?)',
+    ("123", "test@nimbleknow.com", "123")
+    )
+    db.commit()
+
+    """Generate Question"""
+    db.execute(
+    'INSERT INTO question (author_id, q_type, classname, content) VALUES (?, ?, ?, ?)',
+    (1, "multichoice", "123", "What is your favorite letter?")
+    )
+    db.commit()
+
+    """Generate Question Options"""
+    db.execute(
+    'INSERT INTO options (question_id, label, content) VALUES (?, ?, ?)',
+    (1, "a", "option a")
+    )
+    db.commit()
+
+    db.execute(
+    'INSERT INTO options (question_id, label, content) VALUES (?, ?, ?)',
+    (1, "b", "option b")
+    )
+    db.commit()
+
+    db.execute(
+    'INSERT INTO options (question_id, label, content) VALUES (?, ?, ?)',
+    (1, "c", "option c")
+    )
+    db.commit()
+
+    db.execute(
+    'INSERT INTO options (question_id, label, content) VALUES (?, ?, ?)',
+    (1, "d", "option d")
+    )
+    db.commit()
+
+
+    """Adding the data for each choice to db"""
     for a in range(6):
          db.execute(
          'INSERT INTO response (content, choice, question_id) VALUES (?, ?, ?)',
-         ("", "a", 1)
+         ("option a", "a", 1)
          )
          db.commit()
+
     for b in range(6):
         db.execute(
         'INSERT INTO response (content, choice, question_id) VALUES (?, ?, ?)',
-        ("", "b", 1)
+        ("option b", "b", 1)
         )
         db.commit()
 
     for c in range(6):
         db.execute(
         'INSERT INTO response (content, choice, question_id) VALUES (?, ?, ?)',
-        ("", "c", 1)
+        ("option c", "c", 1)
         )
         db.commit()
+
     for d in range(6):
         db.execute(
         'INSERT INTO response (content, choice, question_id) VALUES (?, ?, ?)',
-        ("", "d", 1)
+        ("option d", "d", 1)
         )
         db.commit()
 
