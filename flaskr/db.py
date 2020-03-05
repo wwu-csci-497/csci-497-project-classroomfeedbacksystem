@@ -36,6 +36,41 @@ def init_db():
     with current_app.open_resource("schema.sql") as f:
         db.executescript(f.read().decode("utf8"))
 
+    """Add Sample Data to db"""
+    sample_data()
+
+def sample_data():
+    db = get_db()
+    db.execute(
+    'INSERT INTO question (author_id, q_type, classname, content) VALUES (?, ?, ?, ?)',
+    (1, "multichoice", "classroom", "What is your favorite letter?")
+    )
+    db.commit()
+    for a in range(6):
+         db.execute(
+         'INSERT INTO response (content, choice, question_id) VALUES (?, ?, ?)',
+         ("", "a", 1)
+         )
+         db.commit()
+    for b in range(6):
+        db.execute(
+        'INSERT INTO response (content, choice, question_id) VALUES (?, ?, ?)',
+        ("", "b", 1)
+        )
+        db.commit()
+
+    for c in range(6):
+        db.execute(
+        'INSERT INTO response (content, choice, question_id) VALUES (?, ?, ?)',
+        ("", "c", 1)
+        )
+        db.commit()
+    for d in range(6):
+        db.execute(
+        'INSERT INTO response (content, choice, question_id) VALUES (?, ?, ?)',
+        ("", "d", 1)
+        )
+        db.commit()
 
 @click.command("init-db")
 @with_appcontext
