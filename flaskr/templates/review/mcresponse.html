@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
 
+{% block header %}
+<div class="container">
+  <h1>{% block title %}
+         {{ question}}
+        {% endblock %}
+    </h1>
+</div>
+{% endblock %}
+
+
 
 
 
@@ -12,24 +22,12 @@
         <p class="lead">Options:</p>
         {% for option in options %}
         <div class="custom-control custom-radio">
-          <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-          <label class="custom-control-label" for="customRadio1"> {{option['label']}}</label>
+          <input type="radio" id=option['label'] name="customRadio" class="custom-control-input">
+          <label class="custom-control-label" for="customRadio1"> {{option['label']}}  {{option['content']}}</label>
         </div>
         {% endfor %}
       {% endblock %}
 
-      
-
-    <label for="exampleFormControlTextarea1">Your Question:</label>
-      <div class="custom-control custom-radio">
-        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-        <label class="custom-control-label" for="customRadio1">A</label>
-      </div>
-      <div class="custom-control custom-radio">
-        <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-        <label class="custom-control-label" for="customRadio2">B</label>
-      </div>
-    </div>
 
 
 

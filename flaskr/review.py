@@ -72,6 +72,24 @@ def studentclassroom(classname):
 @login_required
 def responses(question_id, classname):
     db = get_db()
+    question = db.execute(
+        'SELECT content, q_type'
+        ' FROM question' 
+        ' WHERE id = ?',
+        (question_id,)
+    ).fetchone()
+    Q_type =""
+    content = ""
+    for q in question:
+        Q_type = q[1]
+        content =q[0]
+    if Q_type== "multiple-choice":
+        options= db.execute(
+            'SELECT label, content FROM options WHERE question_id = ?',   
+            (question_id,)
+            ).fetchall()
+        return render_template('review/mcresponses.html', question = content, options = options)
+
     responses = db.execute(
         'SELECT id, content, created, question_id'
         ' FROM response' #r JOIN user u ON c.teacher = r.id'
@@ -79,13 +97,15 @@ def responses(question_id, classname):
         ' ORDER BY created DESC',
         (question_id,)
     ).fetchall()
-    question = db.execute(
-        'SELECT content'
-        ' FROM question' 
-        ' WHERE id = ?',
-        (question_id,)
-    ).fetchone()
-    return render_template('review/responses.html', responses = responses, question = question)
+ 
+
+    return render_template('review/responses.html', responses = responses, question = content)
+
+
+@bp.route("/<question_id>/<options>/mcresponses")
+@login_required
+def mcresponses(question, options):
+    return render_template('review/mcresponses.html', question = question, options = options)
 
 
 @bp.route('/create')
@@ -169,28 +189,31 @@ def addOptions(letter, q_id):
             db.commit()
 
 
-@bp.route('/<question_id>/<classname>/response', methods=('GET', 'POST'))
+@bp.route('/<question_id>/<q_type>/<q_content>/<classname>/response', methods=('GET', 'POST'))
 @class_required
-def response(question_id, classname):
-    db = get_db()
-    questions = db.execute(
-        'SELECT content, q_type FROM question WHERE id = ?',   
-        (question_id,)
-        )
-    q_type = ""
-    content = ""
-    for q in questions:
-        content = q[0]
-        q_type = q[1]
-    if q_type == "multiple-choice":
-        print("mc if")
-        options= db.execute(
-        'SELECT label, content FROM options WHERE question_id = ?',   
-        (question_id,)
-        ).fetchall()
-        return redirect(url_for('review.mcresponse', question = content, id=question_id, options = options, classname = classname))
+def response(question_id, q_type, q_content, classname):
+    if request.method == 'GET':
+        db = get_db()
+        # questions = db.execute(
+        #     'SELECT content, q_type FROM question WHERE id = ?',   
+        #     (question_id,)
+        #     )
+        # q_type = ""
+        # q_content = ""
+        # for q in questions:
+        #     q_content = q[0]
+        #     print("content " + content)
+        #     q_type = q[1]
+        if q_type == "multiple-choice":
+            print("mc if")
+            # options= db.execute(
+            # 'SELECT label, content FROM options WHERE question_id = ?',   
+            # (question_id,)
+            # ).fetchall()
+            return redirect(url_for('review.mcresponse', question = q_content, id=question_id, options = "option", classname = classname))
 
     if request.method == 'POST':
+        db = get_db()
         text = request.form['response-text']
         text = text.strip()
         error = None
@@ -207,22 +230,25 @@ def response(question_id, classname):
             return redirect(url_for('review.studentclassroom', classname = classname))
         flash(error)
     
-    return render_template('review/response.html', question = content )
+    return render_template('review/response.html', question_id = question_id, q_type = q_type, q_content = q_content, classname = classname )
 
 @bp.route('/<question>/<id>/<options>/<classname>/mcresponse', methods=('GET', 'POST'))
 @class_required
 def mcresponse(question, id, options, classname):
-    db = get_db()
-    print(question)
-    print(id)
-
         
+    if request.method == 'GET':
+        db = get_db()
+        options= db.execute(
+            'SELECT label, content FROM options WHERE question_id = ?',   
+            (id,)
+            ).fetchall()
     if request.method == 'POST':
         choice = request.form['customRadio']
         error = None
         if not choice:
             error = 'You didn\'t add any new response.'
         if error is None:
+            db = get_db()
             db.execute(
             'INSERT INTO response (choice, question_id) VALUES (?, ?)',   
             (choice, id)

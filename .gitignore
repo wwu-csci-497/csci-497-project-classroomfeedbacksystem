@@ -7,6 +7,10 @@ __pycache__/
 *.so
 
 # Distribution / packaging
+.exe
+.bat
+.cfg
+.ps1
 .Python
 build/
 develop-eggs/
