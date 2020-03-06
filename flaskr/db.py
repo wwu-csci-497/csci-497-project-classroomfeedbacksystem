@@ -3,6 +3,7 @@ import sqlite3
 import click
 from flask import current_app, g
 from flask.cli import with_appcontext
+from werkzeug.security import generate_password_hash
 
 
 def get_db():
@@ -45,10 +46,12 @@ def sample_data():
     """Generate Teacher"""
     db.execute(
     'INSERT INTO user (username, password) VALUES (?, ?)',
-    ("test@nimbleknow.com", "password")
+    ("test@nimbleknow.com", generate_password_hash("123"))
     )
     db.commit()
-
+    # if db.execute(
+    #         'SELECT id FROM user WHERE username = ?', ("test@nimbleknow.com",)).fetchone() is not None:
+    #         print("works")
     """Generate Classroom"""
     db.execute(
     'INSERT INTO classroom (classname, teacher, password) VALUES (?, ?, ?)',
