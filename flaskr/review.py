@@ -58,7 +58,7 @@ def classroom(classname):
 def studentclassroom(classname):
     db = get_db()
     questions = db.execute(
-        'SELECT id, content, classname, created'
+        'SELECT id, content, q_type, classname, created'
         ' FROM question' #r JOIN user u ON c.teacher = r.id'
         ' WHERE classname = ?'
         ' ORDER BY created DESC',
@@ -231,7 +231,7 @@ def mcresponse(question, id, options, classname):
             return redirect(url_for('review.studentclassroom', classname = classname))
         flash(error)
     
-    return render_template('review/mcresponse.html', question = question , id=id, options = options)
+    return render_template('review/mcresponse.html', question = question , id=id, options = options, classname = classname)
 
 
 @bp.route('/<page_name>')

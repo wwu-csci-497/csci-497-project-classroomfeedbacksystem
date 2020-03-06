@@ -90,7 +90,6 @@ def studentlogin():
             session.clear()
             session['classroom_id'] = classroom['id']
             return redirect(url_for('review.studentclassroom', classname = classname))
-
         flash(error)
     return render_template('auth/studentlogin.html')
 
