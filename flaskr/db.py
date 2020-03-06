@@ -55,7 +55,7 @@ def sample_data():
     """Generate Classroom"""
     db.execute(
     'INSERT INTO classroom (classname, teacher, password) VALUES (?, ?, ?)',
-    ("123", "test@nimbleknow.com", "123")
+    ("123", "test@nimbleknow.com", generate_password_hash("123"))
     )
     db.commit()
 
