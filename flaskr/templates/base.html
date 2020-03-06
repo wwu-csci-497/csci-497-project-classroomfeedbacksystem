@@ -8,6 +8,71 @@
 
 <!doctype html>
 
+<style>
+
+html {
+  height: 100%;
+}
+body{
+  background-image: linear-gradient(to bottom, white, #00adb5);
+    background-repeat: no-repeat;
+}
+p{
+  color: #393e46;
+  text-align: center;
+  margin-right: 20%;
+  margin-left: 20%;
+}
+/* .box {
+  background: rgba(204,207,204, .6);
+  margin-right: 17%;
+  margin-left: 17%;
+  height: auto;
+} */
+
+h1{
+  color: #00adb5;
+  text-align: center;
+  font-weight: bold;
+  margin:0;
+  /* text-shadow: 0.5px 0.5px 0.5px black; */
+}
+label{
+  color: #393e46;
+  margin-left: 40%;
+}
+footer{
+  color: #393e46;
+  margin-left: 40%;
+}
+button{
+ border: 3px solid rgba(190,194,196, .4);
+}
+.btn-group{
+  margin-left: 40%;
+  width: 30%;
+  height: 15%;
+
+  font-size: 18px;
+
+}
+
+.btn-group button:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+
+button:hover:not(.active) {
+  background: rgba(0, 173, 181, .2);
+}
+.nav-link:hover:not(.active) {
+  background: rgba(0, 173, 181, .2);
+}
+
+.dropdown-item:hover:not(.active) {
+   background: rgba(0, 173, 181, .2);
+}
+</style>
+
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">NimbleKnow</a>
@@ -25,6 +90,9 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ url_for('review.about') }}">About</a>
           </li>
+      <li class="nav-item">
+            <a class="nav-link" href="#" id="google_translate_element"></a>
+          </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Login
@@ -40,12 +108,24 @@
     </div>
   </nav>
 
+  <div id="google_translate_element"></div>
+
+    <script type="text/javascript" src=
+"https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+    </script>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en'},
+                'google_translate_element');
+        }
+    </script>
 
 <section class="content">
   <header>
     {% block header %}{% endblock %}
   </header>
-  {% block content %}{% endblock %}
+  {% block content %}
+  {% endblock %}
 </section>
 
 {% for message in get_flashed_messages() %}
