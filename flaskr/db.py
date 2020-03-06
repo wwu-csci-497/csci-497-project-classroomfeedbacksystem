@@ -66,60 +66,32 @@ def sample_data():
     )
     db.commit()
 
-    """Generate Question Options"""
-    db.execute(
-    'INSERT INTO options (question_id, label, content) VALUES (?, ?, ?)',
-    (1, "a", "option a")
-    )
-    db.commit()
-
-    db.execute(
-    'INSERT INTO options (question_id, label, content) VALUES (?, ?, ?)',
-    (1, "b", "option b")
-    )
-    db.commit()
-
-    db.execute(
-    'INSERT INTO options (question_id, label, content) VALUES (?, ?, ?)',
-    (1, "c", "option c")
-    )
-    db.commit()
-
-    db.execute(
-    'INSERT INTO options (question_id, label, content) VALUES (?, ?, ?)',
-    (1, "d", "option d")
-    )
-    db.commit()
 
 
     """Adding the data for each choice to db"""
-    for a in range(6):
-         db.execute(
-         'INSERT INTO response (content, choice, question_id) VALUES (?, ?, ?)',
-         ("option a", "a", 1)
-         )
-         db.commit()
+    db.execute(
+    'INSERT INTO options (question_id, label, content, numChosen) VALUES (?, ?, ?, ?)',
+    (1, "a", "option a", 10)
+    )
+    db.commit()
 
-    for b in range(6):
-        db.execute(
-        'INSERT INTO response (content, choice, question_id) VALUES (?, ?, ?)',
-        ("option b", "b", 1)
-        )
-        db.commit()
+    db.execute(
+    'INSERT INTO options (question_id, label, content, numChosen) VALUES (?, ?, ?, ?)',
+    (1, "b", "option b", 6)
+    )
+    db.commit()
 
-    for c in range(6):
-        db.execute(
-        'INSERT INTO response (content, choice, question_id) VALUES (?, ?, ?)',
-        ("option c", "c", 1)
-        )
-        db.commit()
+    db.execute(
+    'INSERT INTO options (question_id, label, content, numChosen) VALUES (?, ?, ?, ?)',
+    (1, "c", "option c", 8)
+    )
+    db.commit()
 
-    for d in range(6):
-        db.execute(
-        'INSERT INTO response (content, choice, question_id) VALUES (?, ?, ?)',
-        ("option d", "d", 1)
-        )
-        db.commit()
+    db.execute(
+    'INSERT INTO options (question_id, label, content, numChosen) VALUES (?, ?, ?, ?)',
+    (1, "d", "option d", 22)
+    )
+    db.commit()
 
 @click.command("init-db")
 @with_appcontext
