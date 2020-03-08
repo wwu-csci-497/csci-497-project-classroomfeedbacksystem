@@ -33,6 +33,7 @@ CREATE TABLE options(
   question_id INTEGER NOT NULL,
   label TEXT,
   content TEXT,
+  numChosen INTEGER NOT NULL,
   FOREIGN KEY (question_id) REFERENCES question (id)
 );
 
