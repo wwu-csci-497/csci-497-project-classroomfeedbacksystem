@@ -19,19 +19,45 @@
     <div class="form-group">
 
       {% block choices %}
-        <p class="lead">Options:</p>
-        {% for option in options %}
-        <div class="custom-control custom-radio">
-          <input type="radio" id=option['label'] name="customRadio" class="custom-control-input">
-          <label class="custom-control-label" for="customRadio1"> {{option['label']}}  {{option['content']}}</label>
-        </div>
-        {% endfor %}
-      {% endblock %}
-
-
-
+      <p class="lead">Options:</p>
+      {% if options[0] %}
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio1"  value = 'A' name="customRadio" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio1"> {{options[0]['label']}}  {{options[0]['content']}}</label>
+      </div>
+      {% endif %}
+      {% if options[1] %}
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio2"  value = 'B' name="customRadio" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio2"> {{options[1]['label']}}  {{options[1]['content']}}</label>
+      </div>
+      {% endif %}
+      {% if options[2] %}
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio3"  value = 'C' name="customRadio" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio3"> {{options[2]['label']}}  {{options[2]['content']}}</label>
+      </div>
+      {% endif %}
+      {% if options[3] %}
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio4" value = 'D' name="customRadio" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio4"> {{options[3]['label']}}  {{options[3]['content']}}</label>
+      </div>
+      {% endif %}
+      {% if options[4] %}
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio5" value = 'E' name="customRadio" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio5"> {{options[4]['label']}}  {{options[4]['content']}}</label>
+      </div>
+      {% endif %}
+      {%endblock%}
+        
+  
 
     <button class="btn btn-primary" type="submit">Submit</button>
   </form>
 </div>
+
+
 {% endblock %}
+

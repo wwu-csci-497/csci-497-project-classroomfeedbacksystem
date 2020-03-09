@@ -68,36 +68,35 @@ def studentclassroom(classname):
     return render_template('review/studentclassroom.html', questions = questions)
 
 
-@bp.route("/<question_id>/<classname>/responses")
+@bp.route("/<question_id>/<classname>/responses", methods=('GET', 'POST'))
 @login_required
 def responses(question_id, classname):
-    db = get_db()
-    question = db.execute(
-        'SELECT content, q_type'
-        ' FROM question' 
-        ' WHERE id = ?',
-        (question_id,)
-    ).fetchone()
-    Q_type =""
-    content = ""
-    for q in question:
-        Q_type = q[1]
-        content =q[0]
-    if Q_type== "multiple-choice":
-        options= db.execute(
-            'SELECT label, content FROM options WHERE question_id = ?',   
+    if request.method == 'GET':
+        db = get_db()
+        question = db.execute(
+            'SELECT content, q_type'
+            ' FROM question' 
+            ' WHERE id = ?',
+            (question_id,)
+        ).fetchone()
+        Q_type =question[1]
+        content = question[0]
+        if Q_type== "multiple-choice":
+            print("multiple choice")
+            options = db.execute (
+                'SELECT label, content, numChosen FROM options WHERE question_id = ?',   
+                (question_id,)
+                ).fetchall()
+            return render_template('review/mcresponses.html', question = content, options = options)
+            
+        responses = db.execute(
+            'SELECT id, content, created, question_id'
+            ' FROM response' #r JOIN user u ON c.teacher = r.id'
+            ' WHERE question_id = ?'
+            ' ORDER BY created DESC',
             (question_id,)
             ).fetchall()
-        return render_template('review/mcresponses.html', question = content, options = options)
-
-    responses = db.execute(
-        'SELECT id, content, created, question_id'
-        ' FROM response' #r JOIN user u ON c.teacher = r.id'
-        ' WHERE question_id = ?'
-        ' ORDER BY created DESC',
-        (question_id,)
-    ).fetchall()
- 
+    
 
     return render_template('review/responses.html', responses = responses, question = content)
 
@@ -105,6 +104,8 @@ def responses(question_id, classname):
 @bp.route("/<question_id>/<options>/mcresponses")
 @login_required
 def mcresponses(question, options):
+    for option in options:
+        print(option[0])
     return render_template('review/mcresponses.html', question = question, options = options)
 
 
@@ -183,8 +184,8 @@ def addOptions(letter, q_id):
         db = get_db()
         if content:
             db.execute(
-            'INSERT INTO options (question_id, label, content) VALUES (?, ?, ?)',   
-            (q_id, letter, content)
+            'INSERT INTO options (question_id, label, content, numChosen) VALUES (?, ?, ?, ?)',   
+            (q_id, letter, content, 0)
             )
             db.commit()
 
@@ -239,25 +240,32 @@ def mcresponse(question, id, options, classname):
     if request.method == 'GET':
         db = get_db()
         options= db.execute(
-            'SELECT label, content FROM options WHERE question_id = ?',   
+            'SELECT label, content, numChosen FROM options WHERE question_id = ?',   
             (id,)
             ).fetchall()
     if request.method == 'POST':
-        choice = request.form['customRadio']
+        choice =request.form['customRadio']
+        print(choice)
+            
         error = None
+        
         if not choice:
-            error = 'You didn\'t add any new response.'
+            error = 'You didn\'t make a choice.'
         if error is None:
             db = get_db()
             db.execute(
-            'INSERT INTO response (choice, question_id) VALUES (?, ?)',   
-            (choice, id)
+            'UPDATE options SET numChosen = numChosen + 1 WHERE label =(?)  AND question_id =(?)',   
+            (choice,id)
             )
             db.commit()
             return redirect(url_for('review.studentclassroom', classname = classname))
         flash(error)
     
     return render_template('review/mcresponse.html', question = question , id=id, options = options, classname = classname)
+
+
+def mcresponse(question, id, options, classname):
+    print(option['label'])
 
 
 @bp.route('/<page_name>')
