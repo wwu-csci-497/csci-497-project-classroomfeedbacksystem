@@ -2,7 +2,7 @@
 
 {% block header %}
 <div class="container">
-  <h1>{% block title %}Your Classrooms{% endblock %}</h1>
+  <h1>{% block title %}Your Classroom{% endblock %}</h1>
 </div>
 {% endblock %}
 
@@ -18,6 +18,6 @@
 
 
 <div class="container">
-  <p class="lead">Want to <a href="{{ url_for('review.create') }}">write a question</a>?</p>
+  <p class="lead">Want to <a href="{{ url_for('review.create', classname=classname) }}">write a question</a>?</p>
 </div>
 {% endblock %}

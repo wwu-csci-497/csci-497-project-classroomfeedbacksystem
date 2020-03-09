@@ -51,7 +51,7 @@ def classroom(classname):
         (classname,)
     ).fetchall()
     print(classname)
-    return render_template('review/classroom.html', questions = questions)
+    return render_template('review/classroom.html', questions = questions, classname = classname)
 
 @bp.route("/<classname>/studentclassroom")
 @class_required
@@ -109,20 +109,21 @@ def mcresponses(question, options):
     return render_template('review/mcresponses.html', question = question, options = options)
 
 
-@bp.route('/create')
+@bp.route('/<classname>/create')
 @login_required
-def create():
+def create(classname):
+    print(classname)
 
-    return render_template('review/create.html')
+    return render_template('review/create.html', classname = classname)
 
-@bp.route('/createlongresponse', methods=('GET', 'POST'))
+@bp.route('/<classname>/createlongresponse', methods=('GET', 'POST'))
 @login_required
-def createlongresponse():
+def createlongresponse(classname):
     if request.method == 'POST':
         text = request.form['question-text']
         text = text.strip()
-        classname = request.form['class']
-        classname = classname.strip()
+        #classname = request.form['class']
+        #classname = classname.strip()
         db = get_db()
         error = None
         if not text:
@@ -136,17 +137,17 @@ def createlongresponse():
             print(classname)
             return redirect(url_for('review.classroom', classname = classname))
         flash(error)
-    return render_template('review/createlongresponse.html')
+    return render_template('review/createlongresponse.html', classname = classname)
 
-@bp.route('/CreateMultipleChoice', methods=('GET', 'POST'))
+@bp.route('/<classname>/CreateMultipleChoice', methods=('GET', 'POST'))
 @login_required
-def CreateMultipleChoice():
+def CreateMultipleChoice(classname):
     if request.method == 'POST':
         form = request.form
         text = form['question-text']
         text = text.strip()
-        classname = request.form['class']
-        classname = classname.strip()
+        #classname = request.form['class']
+        #classname = classname.strip()
         db = get_db()
         error = None
         if not text:
@@ -175,7 +176,7 @@ def CreateMultipleChoice():
     #if request.method == 'GET':
         
         
-    return render_template('review/CreateMultipleChoice.html')
+    return render_template('review/CreateMultipleChoice.html', classname = classname)
 
 def addOptions(letter, q_id):
     if request.method == 'POST':

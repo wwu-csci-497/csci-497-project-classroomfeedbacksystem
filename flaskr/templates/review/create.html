@@ -10,8 +10,8 @@
     Question Type
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="{{ url_for('review.createlongresponse') }}" > Long Response</a>
-    <a class="dropdown-item" href="{{ url_for('review.CreateMultipleChoice') }}" > Multiple Choice</a>
+    <a class="dropdown-item" href="{{ url_for('review.createlongresponse', classname = classname) }}" > Long Response</a>
+    <a class="dropdown-item" href="{{ url_for('review.CreateMultipleChoice', classname = classname)}}" > Multiple Choice</a>
   </div>
 </div>
 {% endblock %}
