@@ -90,9 +90,7 @@ button:hover:not(.active) {
         <li class="nav-item">
             <a class="nav-link" href="{{ url_for('review.about') }}">About</a>
           </li>
-      <li class="nav-item">
-            <a class="nav-link" href="#" id="google_translate_element"></a>
-          </li>
+      
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Login
@@ -103,6 +101,9 @@ button:hover:not(.active) {
             <a class="dropdown-item" href="{{ url_for('auth.register') }}">Register</a>
             <a class="dropdown-item" href="{{ url_for('auth.registerclass') }}">Register Classroom</a>
           </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="google_translate_element"></a>
         </li>
       </ul>
     </div>
