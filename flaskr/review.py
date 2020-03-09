@@ -104,9 +104,15 @@ def responses(question_id, classname):
 @bp.route("/<question_id>/<options>/mcresponses")
 @login_required
 def mcresponses(question, options):
+    data = [0,0,0,0,0]
+    i = 0
+    print(options)
     for option in options:
-        print(option[0])
-    return render_template('review/mcresponses.html', question = question, options = options)
+        data[i] = option[2]
+        console.log(data[i])
+        print("!!!!!!!!!!!!!")
+        i= i+1
+    return render_template('review/mcresponses.html', question = question, options = options, answerdata = data)
 
 
 @bp.route('/<classname>/create')
