@@ -9,7 +9,7 @@
 {% block content %}
 <p class="lead">Questions:</p>
 {% for question in questions %}
-  <blockquote class="blockquote">
+  <blockquote class="blockquote" style="text-align:center">
     <p class="mb-0" > {{ question['content'] }}</p>
     <a class="btn btn-primary" href="{{ url_for('review.responses', question_id=question['id'], classname=question['classname']) }}" role="button">Responses</a>
   </blockquote>
