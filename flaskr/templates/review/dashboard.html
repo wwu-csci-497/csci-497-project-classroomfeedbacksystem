@@ -12,7 +12,7 @@
 <p class="lead">Here are your classrooms:</p>
 {% for classroom in classrooms %}
   <blockquote class="blockquote" style="text-align:center">
-    <a class="btn btn-primary" href="{{ url_for('review.classroom', classname=classroom['classname']) }}" role="button">{{classroom['classname'] }}</a>
+    <a class="btn btn-outline-info" href="{{ url_for('review.classroom', classname=classroom['classname']) }}" role="button">{{classroom['classname'] }}</a>
   </blockquote>
   
 {% endfor %}
