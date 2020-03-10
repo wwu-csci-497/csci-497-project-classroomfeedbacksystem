@@ -15,7 +15,10 @@ html {
 }
 body{
   background-image: linear-gradient(to bottom, white, #00adb5);
-    background-repeat: no-repeat;
+  background-repeat: no-repeat;
+  margin:0;
+  padding:0;
+  overflow:auto;
 }
 p{
   color: #393e46;
@@ -135,14 +138,17 @@ border-color: #565554;
                 'google_translate_element');
         }
     </script>
+<div class="rare-wind-gradient">
 
-<section class="content">
+<section class="content"style='background-image: linear-gradient(to bottom, white, #00adb5);
+                              background-repeat: no-repeat;overflow:auto;height: 100%;'>
   <header>
     {% block header %}{% endblock %}
   </header>
   {% block content %}
   {% endblock %}
 </section>
+</div>
 
 {% for message in get_flashed_messages() %}
     <div class="container alert alert-danger">
