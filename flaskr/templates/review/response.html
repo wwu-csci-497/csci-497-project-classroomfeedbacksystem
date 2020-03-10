@@ -2,7 +2,7 @@
 {% block header %}
 <div class="container">
   <h1>{% block title %}
-         {{ q_content}}
+         {{ question}}
         {% endblock %}
     </h1>
 </div>
@@ -15,7 +15,7 @@
   <form method="post">
     <div class="form-group">
       <label for="exampleFormControlTextarea1">Your Response:</label>
-      <textarea class="form-control" rows="3" name="response-text">   
+      <textarea class="form-control" rows="3" name="response-text">
       </textarea>
     </div>
     <button class="btn btn-outline-info" type="submit">Submit</button>

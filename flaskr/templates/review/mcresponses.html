@@ -5,7 +5,7 @@
   <h1>
     {% block title %}
         <blockquote class="blockquote">
-            <p class="mb-0">{{ question['content']}}</p>
+            <p class="mb-0" style ="text-align:center">{{question}}</p>
         </blockquote>
     {% endblock %}
   </h1>
@@ -45,7 +45,6 @@
       options: {
         title: {
           display: true,
-          text: 'Question should go here',
           fontSize: '32',
           fontStyle: 'bold',
           fontFamily: 'Helvetica',
