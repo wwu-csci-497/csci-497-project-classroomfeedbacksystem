@@ -12,6 +12,8 @@
   <blockquote class="blockquote" style="text-align:center">
     <p class="mb-0" > {{ question['content'] }}</p>
     <a class="btn btn-outline-info" href="{{ url_for('review.responses', question_id=question['id'], classname=question['classname']) }}" role="button">Responses</a>
+	<a class="btn btn-outline-info" href="
+         {{ url_for('review.delete', id=question['id'], classname = classname) }}" role="button">Delete</a>
   </blockquote>
 {% endfor %}
 

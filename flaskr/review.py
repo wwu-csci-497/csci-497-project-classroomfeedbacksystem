@@ -53,6 +53,14 @@ def classroom(classname):
     print(classname)
     return render_template('review/classroom.html', questions = questions, classname = classname)
 
+@bp.route('/delete/<int:id>/<string:classname>', methods=('GET', 'POST'))
+@login_required
+def delete(id, classname):
+  db = get_db()
+  db.execute('DELETE FROM question WHERE id = ?', (id,))
+  db.commit()
+  return redirect(url_for('review.classroom', classname = classname))
+
 @bp.route("/<classname>/studentclassroom")
 @class_required
 def studentclassroom(classname):
