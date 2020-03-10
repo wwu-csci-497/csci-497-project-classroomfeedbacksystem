@@ -2,21 +2,92 @@
 
 {% block header %}
 <div class="container">
-  <h1>{% block title %}
+  <h1>
+    {% block title %}
         <blockquote class="blockquote">
-            <p class="mb-0" > {{ question['content']}}</p>
-        </blockquote>{% endblock %}
-    </h1>
+            <p class="mb-0" style ="text-align:center">{{question}}</p>
+        </blockquote>
+    {% endblock %}
+  </h1>
 </div>
 {% endblock %}
 
 {% block content %}
+<div class="chart-container" style="position: relative; height:90vh; width:50vw">
+<canvas id="myChart"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
+<script>
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var chart = new Chart(ctx, {
+      // The type of chart we want to create
+      type: 'bar',
+      // The data for our dataset
+      data: {
+          labels: ['A', 'B', 'C', 'D', 'E'],
+          datasets: [{
+              label: 'Number of Responses',
+              backgroundColor: ['rgb(255, 0, 0)',
+                               'rgb(255, 128, 0)',
+                               'rgb(255, 255, 0)',
+                               'rgb(76, 153, 0)',
+                               'rgb(102, 0, 204)'],
+              borderColor: '#777',
+              data: [{% for option in options %}
+                        {{option['numChosen']}},
+                        {% endfor %}],
+              borderWidth: 1,
+              hoverBorderWidth: '5',
+              hoverBorderColor: '#000',
+          }]
+      },
+
+      // Configuration options go here
+      options: {
+        title: {
+          display: true,
+          fontSize: '32',
+          fontStyle: 'bold',
+          fontFamily: 'Helvetica',
+          fontColor: '#333'
+        },
+        scales: {
+            fontColor: '#333',
+            xAxes: [{
+              ticks: {
+                beginAtZero: true,
+                stepSize:1
+              }
+            }],
+            yAxes: [{
+              display: true,
+              ticks: {
+                beginAtZero: true,
+                stepSize: 1
+              }
+            }]
+        },
+        layout: [{
+            padding: [{
+              left: 50,
+              right: 50,
+              top: 50,
+              bottom: 50,
+            }],
+
+        }],
+        responsive: true,
+      }
+  });
+</script>
+</div>
     <blockquote class="blockquote">
-      <h1> Responses</h1>
+
+      <p class="lead" style ="font-weight:bold"> Responses</p>
+
      </blockquote>
 {% for option in options %}
   <blockquote class="blockquote">
-    <p class="mb-0" > {{ option['label'] }} {{ option['content'] }} {{ option['numChosen'] }}</p>
+    <p class="mb-0" style="font-size:18"> {{ option['label'] }} {{ option['content'] }} {{ option['numChosen'] }}</p>
   </blockquote>
 {% endfor %}
 {% endblock %}
