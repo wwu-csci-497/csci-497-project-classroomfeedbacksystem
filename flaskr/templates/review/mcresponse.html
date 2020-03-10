@@ -19,7 +19,7 @@
     <div class="form-group">
 
       {% block choices %}
-      <p class="lead">Options:</p>
+      <h4 Style = 'margin-left:30%'>Options:</h4>
       {% if options[0] %}
       <div class="custom-control custom-radio">
         <input type="radio" id="customRadio1"  value = 'A' name="customRadio" class="custom-control-input">
@@ -51,13 +51,13 @@
       </div>
       {% endif %}
       {%endblock%}
-        
-  
 
-    <button class="btn btn-outline-info" type="submit">Submit</button>
+
+    <div style="text-align:center">
+      <button class="btn btn-outline-info" type="submit">Submit</button>
+    </div>
   </form>
 </div>
 
 
 {% endblock %}
-

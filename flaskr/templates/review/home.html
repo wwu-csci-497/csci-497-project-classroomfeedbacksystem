@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}The New Standard in Instant Online Feedback{% endblock %}</h1>
+  <h1>{% block title %}Welcome to NimbleKnow{% endblock %}</h1>
 {% endblock %}
 {% block content %}
-    <p>Welcome! To get started, please select an option from the task bar.</p>
+    <p class = 'customP'>To get started, please select an option from the task bar.</p>
   <blockquote class="blockquote">
-    <p class="mb-0">"This app is awesome! The prototype blows my mind."</p>
+    <p class="mb-0 customP">"This app is awesome! The prototype blows my mind."</p>
     <footer class="blockquote-footer">From a user, probably</footer>
 </blockquote>
 <div role = "group" style="text-align:center">
@@ -15,4 +15,3 @@
   <a  class="btn btn-outline-info btn-lg" href="{{ url_for('auth.studentlogin') }}" role="button">Student Login</a>
 </div>
 {% endblock %}
-

@@ -2,7 +2,7 @@
 
 {% block header %}
 <div class="container">
-  <h1>{% block title %}Your Classroom{% endblock %}</h1>
+  <h1>{% block title %}{{classname}}{% endblock %}</h1>
 </div>
 {% endblock %}
 
@@ -14,10 +14,10 @@
     <a class="btn btn-outline-info" href="{{ url_for('review.responses', question_id=question['id'], classname=question['classname']) }}" role="button">Responses</a>
   </blockquote>
 {% endfor %}
- 
 
 
-<div class="container">
-  <p class="lead">Want to <a href="{{ url_for('review.create', classname=classname) }}">write a question</a>?</p>
+
+<div class="container" style="text-align:center">
+  <a href="{{ url_for('review.create', classname=classname) }}" class="btn btn-outline-info btn-lg" role="button">Create a Question</a>
 </div>
 {% endblock %}

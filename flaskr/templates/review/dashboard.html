@@ -14,11 +14,11 @@
   <blockquote class="blockquote" style="text-align:center">
     <a class="btn btn-outline-info" href="{{ url_for('review.classroom', classname=classroom['classname']) }}" role="button">{{classroom['classname'] }}</a>
   </blockquote>
-  
+
 {% endfor %}
 
-<div class="container">
-    <p class="lead">Want to <a href="{{ url_for('auth.registerclass') }}">register a class</a>?</p>
+<div class="container" style="text-align:center">
+    <a  href="{{ url_for('auth.registerclass') }}" class="btn btn-outline-info btn-lg" role="button">Register a Class</a>
   </div>
 {% endblock %}
 
@@ -29,5 +29,3 @@
       <a href="
          {{ url_for('question.delete', id=question['id']) }}">Delete</a>
     </footer> -->
-
- 
