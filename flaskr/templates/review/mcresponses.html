@@ -7,6 +7,11 @@
         <blockquote class="blockquote">
             <p class="mb-0" style ="text-align:center">{{question}}</p>
         </blockquote>
+{% for option in options %}
+  <blockquote class="blockquote">
+    <p class="mb-0" style="font-size:18"> {{ option['label'] }} {{ option['content'] }}</p>
+  </blockquote>
+{% endfor %}
     {% endblock %}
   </h1>
 </div>
@@ -80,14 +85,5 @@
   });
 </script>
 </div>
-    <blockquote class="blockquote">
 
-      <p class="lead" style ="font-weight:bold"> Responses</p>
-
-     </blockquote>
-{% for option in options %}
-  <blockquote class="blockquote">
-    <p class="mb-0" style="font-size:18"> {{ option['label'] }} {{ option['content'] }} {{ option['numChosen'] }}</p>
-  </blockquote>
-{% endfor %}
 {% endblock %}
