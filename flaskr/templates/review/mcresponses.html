@@ -2,15 +2,75 @@
 
 {% block header %}
 <div class="container">
-  <h1>{% block title %}
+  <h1>
+    {% block title %}
         <blockquote class="blockquote">
             <p class="mb-0" > {{ question['content']}}</p>
-        </blockquote>{% endblock %}
-    </h1>
+        </blockquote>
+    {% endblock %}
+  </h1>
 </div>
 {% endblock %}
 
 {% block content %}
+<canvas id="myChart"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
+<script>
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var chart = new Chart(ctx, {
+      // The type of chart we want to create
+      type: 'bar',
+      // The data for our dataset
+      data: {
+          labels: ['A', 'B', 'C', 'D', 'E'],
+          datasets: [{
+
+              backgroundColor: 'rgb(255, 99, 132)',
+              borderColor: 'rgb(255, 99, 132)',
+              data: [{% for option in options %}
+                        {{option['numChosen']}},
+                        {% endfor %}],
+          }]
+      },
+
+      // Configuration options go here
+      options: {
+        legend: {
+          display: false
+        },
+        title: {
+          display: true,
+          text: 'content',
+          fontSize: '36',
+          fontStyle: 'bold'
+        },
+        scales: {
+            xAxes: [{
+              ticks: {
+                min: 0,
+                stepSize:1
+              }
+            }],
+            yAxes: [{
+              display: true,
+              labelString: 'Number of responses',
+              ticks: {
+                min: 0,
+                stepSize: 1
+              }
+            }]
+        },
+        layout: [{
+            padding: [{
+              left: 50,
+              right: 50,
+              top: 50,
+              bottom: 50,
+            }],
+        }]
+      }
+  });
+</script>
     <blockquote class="blockquote">
       <p class="lead" > Responses</p>
      </blockquote>
