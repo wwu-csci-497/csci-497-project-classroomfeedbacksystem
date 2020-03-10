@@ -23,6 +23,27 @@ p{
   margin-right: 20%;
   margin-left: 20%;
 }
+
+p[style ="font-weight:bold"]{
+  position: relative;
+  top: -525px;
+  left: 400px;
+  font-size: 30;
+}
+
+p[style ="font-size:18"]{
+  position: relative;
+  top: -515px;
+  left: 400px;
+  font-size: 30;
+}
+
+canvas{
+  position: relative;
+  top: 75px;
+  left: 100px;
+}
+
 /* .box {
   background: rgba(204,207,204, .6);
   margin-right: 17%;
@@ -91,7 +112,7 @@ button:hover:not(.active) {
         <li class="nav-item">
             <a class="nav-link" href="{{ url_for('review.about') }}">About</a>
           </li>
-      
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {% if session.get('user_id') is none %}

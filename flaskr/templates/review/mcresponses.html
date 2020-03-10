@@ -5,7 +5,7 @@
   <h1>
     {% block title %}
         <blockquote class="blockquote">
-            <p class="mb-0" > {{ question['content']}}</p>
+            <p class="mb-0">{{ question['content']}}</p>
         </blockquote>
     {% endblock %}
   </h1>
@@ -13,6 +13,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="chart-container" style="position: relative; height:90vh; width:50vw">
 <canvas id="myChart"></canvas>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
 <script>
@@ -24,38 +25,44 @@
       data: {
           labels: ['A', 'B', 'C', 'D', 'E'],
           datasets: [{
-
-              backgroundColor: 'rgb(255, 99, 132)',
-              borderColor: 'rgb(255, 99, 132)',
+              label: 'Number of Responses',
+              backgroundColor: ['rgb(255, 0, 0)',
+                               'rgb(255, 128, 0)',
+                               'rgb(255, 255, 0)',
+                               'rgb(76, 153, 0)',
+                               'rgb(102, 0, 204)'],
+              borderColor: '#777',
               data: [{% for option in options %}
                         {{option['numChosen']}},
                         {% endfor %}],
+              borderWidth: 1,
+              hoverBorderWidth: '5',
+              hoverBorderColor: '#000',
           }]
       },
 
       // Configuration options go here
       options: {
-        legend: {
-          display: false
-        },
         title: {
           display: true,
-          text: 'content',
-          fontSize: '36',
-          fontStyle: 'bold'
+          text: 'Question should go here',
+          fontSize: '32',
+          fontStyle: 'bold',
+          fontFamily: 'Helvetica',
+          fontColor: '#333'
         },
         scales: {
+            fontColor: '#333',
             xAxes: [{
               ticks: {
-                min: 0,
+                beginAtZero: true,
                 stepSize:1
               }
             }],
             yAxes: [{
               display: true,
-              labelString: 'Number of responses',
               ticks: {
-                min: 0,
+                beginAtZero: true,
                 stepSize: 1
               }
             }]
@@ -67,16 +74,19 @@
               top: 50,
               bottom: 50,
             }],
-        }]
+
+        }],
+        responsive: true,
       }
   });
 </script>
+</div>
     <blockquote class="blockquote">
-      <p class="lead" > Responses</p>
+      <p class="lead" style ="font-weight:bold"> Responses</p>
      </blockquote>
 {% for option in options %}
   <blockquote class="blockquote">
-    <p class="mb-0" > {{ option['label'] }} {{ option['content'] }} {{ option['numChosen'] }}</p>
+    <p class="mb-0" style="font-size:18"> {{ option['label'] }} {{ option['content'] }} {{ option['numChosen'] }}</p>
   </blockquote>
 {% endfor %}
 {% endblock %}
