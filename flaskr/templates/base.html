@@ -75,7 +75,7 @@ button:hover:not(.active) {
 
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">NimbleKnow</a>
+    <a class="navbar-brand" href="#" style="color:#00adb5"><b>NimbleKnow</b></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -91,7 +91,7 @@ button:hover:not(.active) {
         <li class="nav-item">
             <a class="nav-link" href="{{ url_for('review.about') }}">About</a>
           </li>
-      
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {% if session.get('user_id') is none %}
