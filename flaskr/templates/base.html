@@ -15,55 +15,51 @@ html {
 }
 body{
   background-image: linear-gradient(to bottom, white, #00adb5);
-    background-repeat: no-repeat;
+  background-repeat: no-repeat;
+  margin:0;
+  padding:0;
+  overflow:auto;
 }
 p{
   color: #393e46;
   text-align: center;
+}
+.customP{
   margin-right: 20%;
   margin-left: 20%;
 }
-/* .box {
-  background: rgba(204,207,204, .6);
-  margin-right: 17%;
-  margin-left: 17%;
-  height: auto;
-} */
-
 h1{
   color: #00adb5;
   text-align: center;
   font-weight: bold;
   margin:0;
-  /* text-shadow: 0.5px 0.5px 0.5px black; */
 }
+
 label{
   color: #393e46;
   margin-left: 40%;
 }
+
 footer{
   color: #393e46;
   margin-left: 40%;
 }
+
 button{
  border: 3px solid rgba(190,194,196, .4);
 }
+
 .btn-group{
   margin-left: 40%;
   width: 30%;
   height: 15%;
-
   font-size: 18px;
-
 }
 
 .btn-group button:not(:last-child) {
   border-right: none; /* Prevent double borders */
 }
 
-button:hover:not(.active) {
-  background: rgba(0, 173, 181, .2);
-}
 .nav-link:hover:not(.active) {
   background: rgba(0, 173, 181, .2);
 }
@@ -71,11 +67,40 @@ button:hover:not(.active) {
 .dropdown-item:hover:not(.active) {
    background: rgba(0, 173, 181, .2);
 }
+
+.btn-outline-info {
+  color:#565554;
+  border-color: #565554;
+}
+
+/* Improve Phone Visualization */
+@media screen and (max-width: 630px) {
+  label{
+    display: inline-block;
+    text-align: left;
+    margin-left:10%;
+  }
+  .label:before {
+    content:" ,";
+  }
+  .label:after {
+    content:" ,";
+  }
+  input{
+    display: inline-block;
+  }
+  .input:before {
+    content:" ,";
+  }
+  .input:after {
+    content:" ,";
+  }
+}
 </style>
 
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">NimbleKnow</a>
+  <nav class="navbar navbar-expand-lg navbar-light"  style='background:white;'>
+    <a class="navbar-brand" href="#" style="color:#00adb5"><b>NimbleKnow</b></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -91,7 +116,7 @@ button:hover:not(.active) {
         <li class="nav-item">
             <a class="nav-link" href="{{ url_for('review.about') }}">About</a>
           </li>
-      
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {% if session.get('user_id') is none %}
@@ -129,14 +154,17 @@ button:hover:not(.active) {
                 'google_translate_element');
         }
     </script>
+<div class="rare-wind-gradient">
 
-<section class="content">
+<section class="content"style='background-image: linear-gradient(to bottom, white, #00adb5);
+                              background-repeat: no-repeat;overflow:auto;height: 100%;'>
   <header>
     {% block header %}{% endblock %}
   </header>
   {% block content %}
   {% endblock %}
 </section>
+</div>
 
 {% for message in get_flashed_messages() %}
     <div class="container alert alert-danger">
